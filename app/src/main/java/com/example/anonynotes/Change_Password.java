@@ -16,10 +16,13 @@ public class Change_Password extends AppCompatActivity {
 
         btnBackToProfile = findViewById(R.id.btnBackToProfile);
 
+
         btnBackToProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(Change_Password.this, Profile_Page.class);
+            // Return to MainActivity and ensure Profile tab is selected
+            Intent intent = new Intent(Change_Password.this, MainActivity.class);
+            intent.putExtra("selectProfileTab", true); // Pass data to indicate profile should be selected
             startActivity(intent);
-            finish();
+            finishAffinity(); // Optional, if you want to close EditProfile activity
         });
     }
 }

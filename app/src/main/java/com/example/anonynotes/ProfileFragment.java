@@ -1,5 +1,6 @@
 package com.example.anonynotes;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -39,6 +41,7 @@ public class ProfileFragment extends Fragment {
     private RecyclerView recyclerView;
     private ProfileAdapter profileAdapter;
     private List<Note> notesList;
+    private View blurOverLay;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,16 +61,19 @@ public class ProfileFragment extends Fragment {
         editProfileButton = view.findViewById(R.id.editProfileButton);
         menuOptions = view.findViewById(R.id.menu_options);
         recyclerView = view.findViewById(R.id.recyclerView);
+        blurOverLay =view.findViewById(R.id.blurOverLay);
 
         // Initially hide the menu
         menuOptions.setVisibility(View.GONE);
+        blurOverLay.setVisibility(View.GONE);
 
         // Toggle menu visibility
         burgerButton.setOnClickListener(v -> {
             if (menuOptions.getVisibility() == View.GONE) {
                 menuOptions.setVisibility(View.VISIBLE);  // Show menu
             } else {
-                menuOptions.setVisibility(View.GONE);  // Hide menu
+                menuOptions.setVisibility(View.GONE);
+                blurOverLay.setVisibility(View.GONE);// Hide menu
             }
         });
 
@@ -87,10 +93,22 @@ public class ProfileFragment extends Fragment {
         });
 
         logout_btn.setOnClickListener(v -> {
-            Intent intent = new Intent(requireActivity(), SignUpActivity.class);
-            startActivity(intent);
-            requireActivity().finish();
+            new AlertDialog.Builder(requireActivity())
+                    .setTitle("Logout Confirmation")
+                    .setMessage("Are you sure you want to log out?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        // User confirmed logout, perform the logout action
+                        Intent intent = new Intent(requireActivity(), LogInActivity.class);
+                        startActivity(intent);
+                        requireActivity().finishAffinity();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> {
+                        // User canceled the logout action, dismiss the dialog
+                        dialog.dismiss();
+                    })
+                    .show();
         });
+
 
         // Initialize notes list and adapter
         notesList = new ArrayList<>();
@@ -115,11 +133,45 @@ public class ProfileFragment extends Fragment {
         // Fetch notes for the user
         if (userId != null) {
             fetchUserNotes(userId);
+            fetchUserBio(userId);
         } else {
             Toast.makeText(requireContext(), "User ID not found", Toast.LENGTH_SHORT).show();
         }
 
     }
+
+    private void fetchUserBio(String userId) {
+        String url = "http://10.0.2.2:8000/api/user/" + userId + "/bio"; // Adjust the endpoint as per your API
+
+        // Initialize request queue
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+
+        // Create a JsonObjectRequest
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                response -> {
+                    try {
+                        String bio = response.getString("bio"); // Adjust the JSON key as per your API response
+                        if (bio != null && !bio.isEmpty()) {
+                            tvBioProfile.setText(bio); // Set the fetched bio to the TextView
+                        } else {
+                            // Display the hint if bio is null or empty
+                            tvBioProfile.setText(null); // Clear any existing text
+                            tvBioProfile.setHint(tvBioProfile.getHint()); // Display the hint
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        Toast.makeText(requireContext(), "Error parsing bio", Toast.LENGTH_SHORT).show();
+                    }
+                },
+                error -> {
+                    error.printStackTrace();
+                    Toast.makeText(requireContext(), "Error fetching bio", Toast.LENGTH_SHORT).show();
+                });
+
+        // Add request to the queue
+        requestQueue.add(jsonObjectRequest);
+    }
+
 
     private void fetchUserNotes(String userId) {
         String url = "http://10.0.2.2:8000/api/users/" + userId + "/notes"; // Construct the URL

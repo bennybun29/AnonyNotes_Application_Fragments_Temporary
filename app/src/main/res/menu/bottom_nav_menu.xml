@@ -1,15 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:icon="@drawable/home"
         android:id="@+id/Home_Button_Nav_Menu"
-        android:title="Home" />
+        android:icon="@drawable/home"
+        android:title="Home"
+        android:enabled="true"
+        android:checked="false" />
     <item
-        android:icon="@drawable/quillpen"
         android:id="@+id/Write_Button_Nav_Menu"
-        android:title="Write" />
+        android:icon="@drawable/quillpen"
+        android:title="Write"
+        android:enabled="true"
+        android:checked="false" />
     <item
-        android:icon="@drawable/maleuser"
         android:id="@+id/Profile_Button_Nav_Menu"
-        android:title="Profile" />
+        android:icon="@drawable/maleuser"
+        android:title="Profile"
+        android:enabled="true"
+        android:checked="false"/>
 </menu>

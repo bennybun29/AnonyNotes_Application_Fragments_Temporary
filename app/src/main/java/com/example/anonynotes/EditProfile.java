@@ -1,5 +1,7 @@
 package com.example.anonynotes;
 
+import static androidx.core.app.PendingIntentCompat.getActivity;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -29,32 +31,44 @@ public class EditProfile extends AppCompatActivity {
         editUsername = findViewById(R.id.editUsername);
 
         btnBackToProfilePage.setOnClickListener(v -> {
-
-            ProfileFragment profileFragment = new ProfileFragment();
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, profileFragment) // Replace with your fragment container ID
-                    .addToBackStack(null) // Optional: Add to back stack to allow back navigation
-                    .commit();
+            // Return to MainActivity and ensure Profile tab is selected
+            Intent intent = new Intent(EditProfile.this, MainActivity.class);
+            intent.putExtra("selectProfileTab", true); // Pass data to indicate profile should be selected
+            startActivity(intent);
+            finishAffinity(); // Optional, if you want to close EditProfile activity
         });
+
+
 
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String username = sharedPreferences.getString("username", null);
         String email = sharedPreferences.getString("email", null);
+        String bio = sharedPreferences.getString("bio", null);
 
         etEmail.setText(email);
         editUsername.setText(username);
 
+        // Set bio if it exists, otherwise set the hint
+        if (bio != null && !bio.isEmpty()) {
+            editBio.setText(bio);
+        } else {
+            editBio.setHint("Add your bio");
+        }
+
         editUsername.setOnClickListener(v -> {
             Intent intent = new Intent(EditProfile.this, EditProfile_Username.class);
             startActivity(intent);
-            finish();
+            finishAffinity();
         });
 
         editBio.setOnClickListener(v -> {
             Intent intent = new Intent(EditProfile.this, EditProfile_Bio.class);
             startActivity(intent);
-            finish();
+            finishAffinity();
         });
+
+
     }
+
 }

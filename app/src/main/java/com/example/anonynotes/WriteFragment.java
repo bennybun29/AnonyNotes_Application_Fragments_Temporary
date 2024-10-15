@@ -1,5 +1,6 @@
 package com.example.anonynotes;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,7 +10,9 @@ import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -18,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 
 import org.json.JSONObject;
 
@@ -55,12 +60,19 @@ public class WriteFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                charCount.setText(charSequence.length() + "/2000");
+                // Limit to 500 characters
+                if (charSequence.length() > 500) {
+                    write_input.setText(charSequence.subSequence(0, 500)); // Trim extra characters
+                    write_input.setSelection(500); // Set cursor position to the end
+                    Toast.makeText(getContext(), "Limit reached! Max 500 characters.", Toast.LENGTH_SHORT).show();
+                }
+                charCount.setText(charSequence.length() + "/500");
             }
 
             @Override
             public void afterTextChanged(Editable editable) {}
         });
+
 
         submit.setOnClickListener(v -> {
             String content = write_input.getText().toString();
@@ -132,11 +144,20 @@ public class WriteFragment extends Fragment {
                 progressDialog.dismiss();
                 if (result != null) {
                     Toast.makeText(getContext(), "Note submitted successfully!", Toast.LENGTH_SHORT).show();
-                    // Optionally handle fragment navigation back to another fragment here
+
+                    // Navigate back to HomeFragment
+                    getActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.frame_layout, new HomeFragment()) // Use the correct container ID
+                            .commit();
+
+                    ((MainActivity) getActivity()).binding.bottomNavMenuNavigation.setSelectedItemId(R.id.Home_Button_Nav_Menu);
+
                 } else {
                     Toast.makeText(getContext(), "Failed to submit note. Please try again.", Toast.LENGTH_SHORT).show();
                 }
             }
+
         }.execute();
     }
 }

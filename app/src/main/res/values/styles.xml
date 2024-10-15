@@ -1,9 +1,13 @@
 <resources>
-    <!-- Custom style for the menu items -->
-    <style name="CustomBottomNavigationStyle" parent="Widget.Design.BottomNavigationView">
-        <!-- Text size for the title -->
-        <item name="android:textSize">25sp</item> <!-- Adjust the size as needed -->
-        <!-- Icon size -->
-        <item name="itemIconSize">32dp</item> <!-- Adjust icon size as needed -->
+    <!-- Active text appearance with larger font size -->
+    <style name="BottomNavTextActive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Inactive text appearance with smaller font size -->
+    <style name="BottomNavTextInactive" parent="TextAppearance.MaterialComponents.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">normal</item>
     </style>
 </resources>

@@ -1,7 +1,9 @@
 package com.example.anonynotes;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -24,14 +26,15 @@ public class startup_page extends AppCompatActivity {
         btnGetStarted = findViewById(R.id.btnGetStarted);
         tvWUsername = findViewById(R.id.tvWUsername);
 
-        // Get the username from Intent extras
-        String username = getIntent().getStringExtra("USERNAME");
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String username = preferences.getString("username", ""); // Default to empty string if not found
+
         if (username != null) {
             tvWUsername.setText(username); // Set the username in the TextView
         }
 
         btnGetStarted.setOnClickListener(v -> {
-            Intent intent = new Intent(startup_page.this, HomeFragment.class);
+            Intent intent = new Intent(startup_page.this, MainActivity.class);
             startActivity(intent);
             finish();
         });
