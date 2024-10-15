@@ -97,6 +97,12 @@ public class ProfileFragment extends Fragment {
                     .setTitle("Logout Confirmation")
                     .setMessage("Are you sure you want to log out?")
                     .setPositiveButton("Yes", (dialog, which) -> {
+                        // Clear SharedPreferences on logout
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.clear(); // Clear all data
+                        editor.apply();
+
                         // User confirmed logout, perform the logout action
                         Intent intent = new Intent(requireActivity(), LogInActivity.class);
                         startActivity(intent);
@@ -108,6 +114,7 @@ public class ProfileFragment extends Fragment {
                     })
                     .show();
         });
+
 
 
         // Initialize notes list and adapter
@@ -151,12 +158,14 @@ public class ProfileFragment extends Fragment {
                 response -> {
                     try {
                         String bio = response.getString("bio"); // Adjust the JSON key as per your API response
-                        if (bio != null && !bio.isEmpty()) {
+                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        if (bio != null && !bio.isEmpty() && bio != "null") {
                             tvBioProfile.setText(bio); // Set the fetched bio to the TextView
+                            editor.putString("profile_bio", bio);
+                            editor.apply();// Save the bio in SharedPreferences
                         } else {
-                            // Display the hint if bio is null or empty
-                            tvBioProfile.setText(null); // Clear any existing text
-                            tvBioProfile.setHint(tvBioProfile.getHint()); // Display the hint
+                            tvBioProfile.setHint("Edit your bio using Edit Profile button"); // Display the hint
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();

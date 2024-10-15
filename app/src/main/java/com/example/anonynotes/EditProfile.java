@@ -39,21 +39,20 @@ public class EditProfile extends AppCompatActivity {
         });
 
 
-
-
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String username = sharedPreferences.getString("username", null);
         String email = sharedPreferences.getString("email", null);
         String bio = sharedPreferences.getString("bio", null);
+        String profile_bio = sharedPreferences.getString("profile_bio", null);
 
         etEmail.setText(email);
         editUsername.setText(username);
 
-        // Set bio if it exists, otherwise set the hint
-        if (bio != null && !bio.isEmpty()) {
+        if (bio != null && !bio.isEmpty() && bio != "null") {
+            editBio.setText(profile_bio);
             editBio.setText(bio);
         } else {
-            editBio.setHint("Add your bio");
+            editBio.setHint("Add your bio"); // Display the hint
         }
 
         editUsername.setOnClickListener(v -> {

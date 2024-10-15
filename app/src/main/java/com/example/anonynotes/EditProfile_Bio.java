@@ -59,7 +59,7 @@ public class EditProfile_Bio extends AppCompatActivity {
         }
 
         // Load current bio from SharedPreferences (if applicable)
-        String currentBio = sharedPreferences.getString("bio", "");
+        String currentBio = sharedPreferences.getString("profile_bio", "");
 
         // Set bio if it exists, otherwise set the hint
         if (currentBio != null && !currentBio.isEmpty()) {
