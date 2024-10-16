@@ -35,7 +35,7 @@ public class Account_Status extends AppCompatActivity {
             Intent intent = new Intent(Account_Status.this, MainActivity.class);
             intent.putExtra("selectProfileTab", true); // Pass data to indicate profile should be selected
             startActivity(intent);
-            finish(); // Optional, if you want to close EditProfile activity
+            finishAffinity(); // Optional, if you want to close EditProfile activity
         });
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
