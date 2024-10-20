@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.AnonyNotes" parent="Base.Theme.AnonyNotes" />
+
+    <style name="Theme.AnonyNotes.LoginSignupBackground">
+        <item name="android:windowBackground">@drawable/signup_bg</item>
+    </style>
 </resources>

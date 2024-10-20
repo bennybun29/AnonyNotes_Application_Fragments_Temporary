@@ -4,41 +4,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/question_marks"
     android:fitsSystemWindows="true"
-    tools:context=".WriteFragment">
+    tools:context=".WriteFragment"
+    >
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity"
-        android:fitsSystemWindows="true">
-
-        <ImageView
-            android:id="@+id/Write_img"
-            android:layout_width="374dp"
-            android:layout_height="56dp"
-            android:layout_marginTop="25dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="anonynotes"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/write" />
+        android:fitsSystemWindows="true"
+        android:visibility="visible"
+        tools:context=".MainActivity">
 
         <ImageView
             android:id="@+id/tuxedo_img"
-            android:layout_width="120dp"
-            android:layout_height="114dp"
+            android:layout_width="173dp"
+            android:layout_height="160dp"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:contentDescription="anonymous"
             android:elevation="5dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/Write_img"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/profile" />
 
         <LinearLayout
@@ -64,7 +54,7 @@
                 android:layout_marginTop="20dp"
                 android:text="What's on your mind?"
                 android:textColor="#000"
-                android:textSize="18sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -72,9 +62,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
+                android:gravity="center"
                 android:text="A joke, funny story, embarrassing moment?"
                 android:textColor="#888888"
-                android:textSize="14sp" />
+                android:textSize="17sp" />
 
             <EditText
                 android:id="@+id/write_input"
@@ -84,14 +75,15 @@
                 android:layout_marginRight="10dp"
                 android:layout_marginBottom="30dp"
                 android:background="@drawable/edit_text_border"
+                android:fontFamily="@font/inter_light"
                 android:gravity="top|start"
-                android:hint="Write Something..."
+                android:hint="Write something..."
                 android:inputType="textMultiLine"
-                android:maxLength="500"
+                android:maxLength="200"
                 android:paddingStart="7dp"
                 android:textColor="@color/black"
                 android:textColorHint="#888888"
-                android:textSize="16sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/char_count"
@@ -100,8 +92,8 @@
                 android:layout_gravity="end|bottom"
                 android:layout_marginTop="-25dp"
                 android:layout_marginEnd="10dp"
-                android:text="0/500"
-                android:textColor="#888888"
+                android:text="0/200"
+                android:textColor="#000000"
                 android:textSize="12sp" />
 
         </LinearLayout>
@@ -113,26 +105,15 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginBottom="10dp"
             android:backgroundTint="@color/black"
             android:text="Submit"
             android:textColor="@color/white"
-            app:layout_constraintBottom_toTopOf="@+id/submitAnonymously"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.478"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/leeniar" />
-
-        <CheckBox
-            android:id="@+id/submitAnonymously"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_tight_semibold"
-            android:text="Submit without username"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/submit" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

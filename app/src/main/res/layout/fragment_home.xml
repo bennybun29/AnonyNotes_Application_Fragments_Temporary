@@ -17,6 +17,18 @@
         android:fitsSystemWindows="true">
 
         <ImageView
+            android:id="@+id/Image_Gone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_centerInParent="true"
+            />
+
+        <ImageView
             android:id="@+id/Home_img"
             android:layout_width="374dp"
             android:layout_height="56dp"
@@ -29,9 +41,11 @@
             app:srcCompat="@drawable/home_logo" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:background="@color/white"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.428"
@@ -40,7 +54,6 @@
             app:layout_constraintVertical_bias="0.0">
             <!-- RecyclerView for posts -->
         </androidx.recyclerview.widget.RecyclerView>
-
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

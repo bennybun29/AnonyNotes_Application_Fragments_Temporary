@@ -1,5 +1,6 @@
 package com.example.anonynotes;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -60,7 +61,7 @@ public class Change_Password extends AppCompatActivity {
                 .build();
 
         // Get SharedPreferences
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String user_id = sharedPreferences.getString("user_id", null);
         String token = sharedPreferences.getString("auth_token", null);  // Retrieve the saved token
 
@@ -78,19 +79,37 @@ public class Change_Password extends AppCompatActivity {
         });
     }
 
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Change_Password.this, MainActivity.class);
+        intent.putExtra("selectProfileTab", true); // Pass data to indicate profile should be selected
+        startActivity(intent);
+        finishAffinity(); // Optional: Close this activity completely
+    }
+
     private boolean validateInputs(String currentPassword, String newPassword, String confirmPassword) {
+        // Check if any field is empty
         if (currentPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return false;
         }
 
+        // Check if the new password matches the confirm password
         if (!newPassword.equals(confirmPassword)) {
             Toast.makeText(this, "New password and confirmation do not match", Toast.LENGTH_SHORT).show();
             return false;
         }
 
+        // Check if the new password is different from the current password
+        if (currentPassword.equals(newPassword)) {
+            Toast.makeText(this, "New password must be different from the current password", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
         return true;
     }
+
 
     private void changePassword(String token, ChangePasswordRequest request) {
         // Make the call to the backend

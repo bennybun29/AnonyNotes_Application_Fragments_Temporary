@@ -1,8 +1,14 @@
 package com.example.anonynotes;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -23,6 +29,7 @@ public class CommentSection extends AppCompatActivity {
     private ImageButton btnBackArrow;
 
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,8 +38,10 @@ public class CommentSection extends AppCompatActivity {
 
         btnBackArrow = findViewById(R.id.btnBackArrow);
         btnBackArrow.setOnClickListener(v -> {
-            Intent intent = new Intent(CommentSection.this, Home_Page.class);
+            Intent intent = new Intent(CommentSection.this, MainActivity.class);
+            intent.putExtra("selectHomeTab", true); // Pass data to indicate profile should be selected
             startActivity(intent);
+            finishAffinity(); // Optional, if you want to close EditProfile activity
         });
 
         commentArrayList = generateComments();
@@ -44,6 +53,28 @@ public class CommentSection extends AppCompatActivity {
         recyclerView.setAdapter(commentAdapter);
 
         setupListeners(commentArrayList, commentAdapter);
+
+        etComment = findViewById(R.id.etComment);
+        etComment.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                etComment.setTranslationY(-500);
+                return false;
+            }
+        });
+        etComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)){
+                    InputMethodManager in = (InputMethodManager) getSystemService (Context.INPUT_METHOD_SERVICE);
+                    in.hideSoftInputFromWindow(etComment.getApplicationWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+                }
+
+                etComment.setTranslationY(0f);
+                return false;
+            }
+        });
+
     }
 
     private List<Comment> generateComments() {
@@ -80,7 +111,7 @@ public class CommentSection extends AppCompatActivity {
             String currentDateTime = getCurrentDateTime();
 
             // Add the reply to the first comment's replies list
-            mainComment.getReplies().add(new Comment("Abad", currentDateTime, replyText, new ArrayList<>()));
+            mainComment.getReplies().add(new Comment("abad", currentDateTime, replyText, new ArrayList<>()));
 
             // Clear the EditText field after the reply is added
             etComment.getText().clear();
@@ -99,4 +130,5 @@ public class CommentSection extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH),
                 calendar.get(Calendar.YEAR));
     }
+
 }

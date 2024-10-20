@@ -18,15 +18,16 @@
 
         <ImageView
             android:id="@+id/Home_img"
-            android:layout_width="330dp"
-            android:layout_height="56dp"
-            android:layout_marginStart="10dp"
+            android:layout_width="320dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="-200dp"
             android:layout_marginTop="25dp"
             android:background="@android:color/transparent"
             android:contentDescription="anonynotes"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/profile_logo" />
+            app:srcCompat="@drawable/home_logo" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -66,9 +67,9 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginTop="28dp"
+            android:layout_marginEnd="10dp"
             android:background="@null"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/Home_img"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseline_menu_24" />
 
@@ -115,7 +116,7 @@
         <View
             android:id="@+id/blurOverLay"
             android:layout_width="0dp"
-            android:layout_height="10dp"
+            android:layout_height="0dp"
             android:background="#80000000"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,7 +147,7 @@
                 android:drawableLeft="@drawable/account_status"
                 android:text="Account Status"
                 android:textColor="#FF000000"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 android:drawablePadding="10dp"
                 android:paddingTop="10dp"
                 android:padding="10dp"
@@ -160,7 +161,7 @@
                 android:drawableLeft="@drawable/password_reset"
                 android:text="Change Password"
                 android:textColor="#FF000000"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:background="@android:color/transparent"
@@ -173,7 +174,7 @@
                 android:drawableLeft="@drawable/signoutbutton"
                 android:text="Logout"
                 android:textColor="#FF000000"
-                android:textSize="10dp"
+                android:textSize="15dp"
                 android:drawablePadding="10dp"
                 android:padding="10dp"
                 android:background="@android:color/transparent"

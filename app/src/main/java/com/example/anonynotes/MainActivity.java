@@ -33,8 +33,6 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         });
-
-
     }
 
     @Override
@@ -44,21 +42,27 @@ public class MainActivity extends AppCompatActivity {
         // Check if the intent has extra to select the Profile tab
         Intent intent = getIntent();
         boolean selectProfileTab = intent.getBooleanExtra("selectProfileTab", false);
+        boolean selectHomeTab = intent.getBooleanExtra("selectHomeTab", false);
 
         if (selectProfileTab) {
             // Programmatically select the Profile tab
             binding.bottomNavMenuNavigation.setSelectedItemId(R.id.Profile_Button_Nav_Menu);
             replaceFragment(new ProfileFragment());
+        } else if (selectHomeTab) {
+            // Programmatically select the Home tab
+            binding.bottomNavMenuNavigation.setSelectedItemId(R.id.Home_Button_Nav_Menu);
+            replaceFragment(new HomeFragment());
         }
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment currentFragment = fragmentManager.findFragmentById(R.id.frame_layout);
+        // Get the count of fragments in the back stack
+        int backStackCount = fragmentManager.getBackStackEntryCount();
 
-        // Check if the current fragment is HomeFragment
+        // Check if we are currently on the HomeFragment
+        Fragment currentFragment = fragmentManager.findFragmentById(R.id.frame_layout);
         if (currentFragment instanceof HomeFragment) {
             // Show a confirmation dialog to exit the app
             new AlertDialog.Builder(this)
@@ -67,14 +71,17 @@ public class MainActivity extends AppCompatActivity {
                     .setPositiveButton("Yes", (dialog, which) -> finish()) // Close the app
                     .setNegativeButton("No", (dialog, which) -> dialog.dismiss()) // Dismiss dialog
                     .show();
+        } else if (backStackCount > 0) {
+            // If there are fragments in the back stack, pop the last one
+            fragmentManager.popBackStack();
+            // After popping, set the Home button as selected
+            binding.bottomNavMenuNavigation.setSelectedItemId(R.id.Home_Button_Nav_Menu);
         } else {
-            // If the current fragment is not HomeFragment, navigate back to HomeFragment
+            // If not on the HomeFragment and no fragments in back stack, navigate to HomeFragment
             replaceFragment(new HomeFragment());
             binding.bottomNavMenuNavigation.setSelectedItemId(R.id.Home_Button_Nav_Menu);
         }
     }
-
-
 
     private void replaceFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();

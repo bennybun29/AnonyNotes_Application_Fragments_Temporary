@@ -2,14 +2,14 @@ package com.example.anonynotes;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.TextView;
-
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
@@ -22,18 +22,28 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_splash);
+        setContentView(R.layout.activity_splash);  // Removed EdgeToEdge.enable(this) for now
 
         notificationBubble = findViewById(R.id.notification_bubble);
 
-        // Delay check for 3 seconds
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkInternetConnection();
-            }
-        }, SPLASH_DISPLAY_LENGTH);
+        // Check if the auth token is already saved in SharedPreferences
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this); // Updated
+        String authToken = preferences.getString("auth_token", null);
+
+        if (authToken != null) {
+            // User is already logged in, navigate to the Home Page
+            Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish(); // Close this activity to prevent going back to splash screen
+        } else {
+            // Delay check for 3 seconds if not logged in
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    checkInternetConnection();
+                }
+            }, SPLASH_DISPLAY_LENGTH);
+        }
     }
 
     private void checkInternetConnection() {

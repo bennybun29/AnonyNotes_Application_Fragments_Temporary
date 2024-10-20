@@ -51,6 +51,11 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("org.jsoup:jsoup:1.15.3")
     implementation("com.android.volley:volley:1.2.1")
+    implementation("pl.droidsonroids.gif:android-gif-drawable:1.2.19")
+    implementation("com.github.bumptech.glide:glide:4.11.0")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.11.0")
+
+
 
 
 

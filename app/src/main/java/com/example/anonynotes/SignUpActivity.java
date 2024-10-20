@@ -16,13 +16,10 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import okhttp3.*;
-
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -52,6 +49,12 @@ public class SignUpActivity extends AppCompatActivity {
                 String password = ETPassword.getText().toString().trim();
                 String confirmPassword = ETConfirmPassword.getText().toString().trim();
 
+                // Validate that the email ends with ".com" and matches general email format
+                if (!isValidEmail(email)) {
+                    Toast.makeText(SignUpActivity.this, "Please enter a valid email address", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 if (email.isEmpty() || username.isEmpty() || password.isEmpty()) {
                     Toast.makeText(SignUpActivity.this, "Please fill in all fields", Toast.LENGTH_SHORT).show();
                     return;
@@ -64,6 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
             }
         });
+
 
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
 
@@ -96,6 +100,14 @@ public class SignUpActivity extends AppCompatActivity {
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
     }
+
+    // Method to validate email format and ensure it ends with ".com"
+    private boolean isValidEmail(String email) {
+        // Regular expression for a valid email that ends with ".com"
+        String emailPattern = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.com$";
+        return email.matches(emailPattern);
+    }
+
 
     // Method to send signup data to the server
     private void sendSignUpData(String email, String username, String password) {

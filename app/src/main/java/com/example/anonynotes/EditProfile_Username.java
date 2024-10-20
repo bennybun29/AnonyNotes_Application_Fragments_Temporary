@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -31,11 +30,11 @@ public class EditProfile_Username extends AppCompatActivity {
     private ImageButton btnBackToEditProfile, btnConfirmChanges;
     private EditText etUsername;
     private TextView character_count;
+    private String originalUsername; // Store the original username
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_editprofile_username);
 
         btnBackToEditProfile = findViewById(R.id.btnBackToEditProfile);
@@ -45,8 +44,8 @@ public class EditProfile_Username extends AppCompatActivity {
 
         // Load current username from SharedPreferences
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String username = sharedPreferences.getString("username", null);
-        etUsername.setText(username);
+        originalUsername = sharedPreferences.getString("username", null);  // Save original username
+        etUsername.setText(originalUsername);
 
         // Character Counter
         etUsername.addTextChangedListener(new TextWatcher() {
@@ -59,7 +58,7 @@ public class EditProfile_Username extends AppCompatActivity {
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // Update character count dynamically
                 int length = charSequence.length();
-                character_count.setText(length + "/30");
+                character_count.setText(length + "/20");
             }
 
             @Override
@@ -78,7 +77,7 @@ public class EditProfile_Username extends AppCompatActivity {
             }
         });
 
-        btnBackToEditProfile.setOnClickListener(v -> showUnsavedChangesDialog());
+        btnBackToEditProfile.setOnClickListener(v -> checkForUnsavedChanges());
     }
 
     private void updateUsernameOnServer(String newUsername) {
@@ -124,7 +123,24 @@ public class EditProfile_Username extends AppCompatActivity {
                     new Response.ErrorListener() {
                         @Override
                         public void onErrorResponse(VolleyError error) {
-                            Toast.makeText(EditProfile_Username.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                            try {
+                                String responseBody = new String(error.networkResponse.data, "utf-8");
+                                JSONObject jsonObject = new JSONObject(responseBody);
+
+                                if (jsonObject.has("errors")) {
+                                    String errorMessage = jsonObject.getJSONArray("errors").getString(0);
+                                    if (errorMessage.contains("user_name has already been taken")) {
+                                        Toast.makeText(EditProfile_Username.this, "Username is already taken", Toast.LENGTH_SHORT).show();
+                                    } else {
+                                        Toast.makeText(EditProfile_Username.this, "Error: " + errorMessage, Toast.LENGTH_SHORT).show();
+                                    }
+                                } else {
+                                    Toast.makeText(EditProfile_Username.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Toast.makeText(EditProfile_Username.this, "Username is already taken", Toast.LENGTH_SHORT).show();
+                            }
                         }
                     }) {
                 @Override
@@ -143,7 +159,20 @@ public class EditProfile_Username extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        showUnsavedChangesDialog(); // Show the dialog without calling super
+        checkForUnsavedChanges(); // Check for unsaved changes before going back
+    }
+
+    private void checkForUnsavedChanges() {
+        String currentUsername = etUsername.getText().toString();
+
+        if (!currentUsername.equals(originalUsername)) {
+            // If there are unsaved changes, show the dialog
+            showUnsavedChangesDialog();
+        } else {
+            Intent intent = new Intent(EditProfile_Username.this, EditProfile.class);
+            startActivity(intent);
+            finishAffinity();
+        }
     }
 
     private void showUnsavedChangesDialog() {

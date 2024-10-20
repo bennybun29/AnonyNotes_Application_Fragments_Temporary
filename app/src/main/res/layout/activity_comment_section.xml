@@ -59,7 +59,7 @@
                 android:textStyle="bold"/>
 
         </LinearLayout>
-            <!--  RecyclerView placed inside the LinearLayout  -->
+        <!--  RecyclerView placed inside the LinearLayout  -->
         <!--  Horizontal LinearLayout containing EditText and Send Button  -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvViewComments"
@@ -69,26 +69,26 @@
             android:padding="5dp"/>
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/linear_border">
+            <!--  EditText for typing comments  -->
+            <EditText
+                android:id="@+id/etComment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/linear_border">
-                <!--  EditText for typing comments  -->
-                <EditText
-                    android:id="@+id/etComment"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:hint="Comment Something"
-                    android:inputType="text"
-                    android:textSize="13sp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginStart="8dp"
-                    android:layout_gravity="center_vertical"
-                    android:background="@null"
-                    android:maxLength="150"/>
-                <!--  Send button on the right  -->
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Comment Something"
+                android:inputType="text"
+                android:textSize="13sp"
+                android:layout_marginEnd="0dp"
+                android:layout_marginStart="8dp"
+                android:layout_gravity="center_vertical"
+                android:background="@null"
+                android:maxLength="150"/>
+            <!--  Send button on the right  -->
             <ImageButton
                 android:id="@+id/btnSend"
                 android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                 android:padding="7dp"/>
 
         </LinearLayout>
-        </LinearLayout>
+    </LinearLayout>
 
 
 

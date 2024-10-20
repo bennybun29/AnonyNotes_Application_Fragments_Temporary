@@ -8,6 +8,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
+import android.text.style.UnderlineSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -78,6 +79,7 @@ public class LogInActivity extends AppCompatActivity {
         TextView forgotPasswordTV = findViewById(R.id.tvForgotPassword);
         String forgotPasswordText = "Forgot Password?";
         SpannableString spannableForgotPassword = new SpannableString(forgotPasswordText);
+        spannableForgotPassword.setSpan(new UnderlineSpan(), 0, forgotPasswordText.length(), 0);
 
         ClickableSpan clickableForgotPassword = new ClickableSpan() {
             @Override
@@ -85,6 +87,7 @@ public class LogInActivity extends AppCompatActivity {
                 // Redirect to ForgotPasswordActivity
                 Intent intent = new Intent(LogInActivity.this, forgot_password.class);
                 startActivity(intent);
+                finishAffinity();
             }
 
             @Override

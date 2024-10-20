@@ -91,7 +91,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end|bottom"
             android:padding="8dp"
-            android:text="0/2000" />
+            android:text="0/500"
+            android:textColor="#000000"/>
 
     </LinearLayout>
 

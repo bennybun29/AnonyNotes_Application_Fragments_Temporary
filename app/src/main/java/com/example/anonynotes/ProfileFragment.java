@@ -1,11 +1,11 @@
 package com.example.anonynotes;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,21 +14,16 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,15 +62,46 @@ public class ProfileFragment extends Fragment {
         menuOptions.setVisibility(View.GONE);
         blurOverLay.setVisibility(View.GONE);
 
-        // Toggle menu visibility
+        // Toggle menu visibility with animation
         burgerButton.setOnClickListener(v -> {
             if (menuOptions.getVisibility() == View.GONE) {
-                menuOptions.setVisibility(View.VISIBLE);  // Show menu
+                // Set the views to be initially invisible and transparent
+                menuOptions.setVisibility(View.VISIBLE);
+                menuOptions.setAlpha(0f);  // Transparent
+                blurOverLay.setVisibility(View.VISIBLE);
+                blurOverLay.setAlpha(0f);  // Transparent
+
+                // Animate the alpha to make the views visible with a fade-in effect
+                menuOptions.animate()
+                        .alpha(1f)  // Fully visible
+                        .setDuration(300)  // Duration of the animation in milliseconds
+                        .start();
+                blurOverLay.animate()
+                        .alpha(1f)  // Fully visible
+                        .setDuration(300)  // Same duration as the menuOptions
+                        .start();
             } else {
-                menuOptions.setVisibility(View.GONE);
-                blurOverLay.setVisibility(View.GONE);// Hide menu
+                // Fade out animation
+                menuOptions.animate()
+                        .alpha(0f)  // Fully transparent
+                        .setDuration(300)
+                        .withEndAction(() -> menuOptions.setVisibility(View.GONE))  // Set to GONE after animation
+                        .start();
+                blurOverLay.animate()
+                        .alpha(0f)  // Fully transparent
+                        .setDuration(300)
+                        .withEndAction(() -> blurOverLay.setVisibility(View.GONE))  // Set to GONE after animation
+                        .start();
             }
         });
+
+
+        // Close menu when clicking outside (on the blur overlay)
+        blurOverLay.setOnClickListener(v -> {
+            menuOptions.setVisibility(View.GONE); // Hide menu
+            blurOverLay.setVisibility(View.GONE); // Hide blur overlay
+        });
+
 
         account_status_btn = view.findViewById(R.id.account_status);
         change_password_btn = view.findViewById(R.id.change_password);
@@ -98,9 +124,9 @@ public class ProfileFragment extends Fragment {
                     .setMessage("Are you sure you want to log out?")
                     .setPositiveButton("Yes", (dialog, which) -> {
                         // Clear SharedPreferences on logout
-                        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
-                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.clear(); // Clear all data
+                        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+                        SharedPreferences.Editor editor = preferences.edit();
+                        editor.clear();  // Remove the saved token
                         editor.apply();
 
                         // User confirmed logout, perform the logout action

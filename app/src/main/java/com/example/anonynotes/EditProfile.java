@@ -2,6 +2,7 @@ package com.example.anonynotes;
 
 import static androidx.core.app.PendingIntentCompat.getActivity;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,14 +43,13 @@ public class EditProfile extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String username = sharedPreferences.getString("username", null);
         String email = sharedPreferences.getString("email", null);
-        String bio = sharedPreferences.getString("bio", null);
-        String profile_bio = sharedPreferences.getString("profile_bio", null);
+        String bio = sharedPreferences.getString("profile_bio", null);
 
         etEmail.setText(email);
         editUsername.setText(username);
 
+
         if (bio != null && !bio.isEmpty() && bio != "null") {
-            editBio.setText(profile_bio);
             editBio.setText(bio);
         } else {
             editBio.setHint("Add your bio"); // Display the hint
@@ -68,6 +68,15 @@ public class EditProfile extends AppCompatActivity {
         });
 
 
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(EditProfile.this, MainActivity.class);
+        intent.putExtra("selectProfileTab", true); // Pass data to indicate profile should be selected
+        startActivity(intent);
+        finishAffinity(); // Optional, if you want to close EditProfile activity
     }
 
 }

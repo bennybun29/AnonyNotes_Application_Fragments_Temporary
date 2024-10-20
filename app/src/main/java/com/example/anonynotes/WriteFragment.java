@@ -1,33 +1,24 @@
 package com.example.anonynotes;
 
+
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.fragment.app.Fragment;
-
-import com.google.android.material.bottomnavigation.BottomNavigationItemView;
-
 import org.json.JSONObject;
-
 import java.io.IOException;
-
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -61,12 +52,12 @@ public class WriteFragment extends Fragment {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 // Limit to 500 characters
-                if (charSequence.length() > 500) {
-                    write_input.setText(charSequence.subSequence(0, 500)); // Trim extra characters
-                    write_input.setSelection(500); // Set cursor position to the end
-                    Toast.makeText(getContext(), "Limit reached! Max 500 characters.", Toast.LENGTH_SHORT).show();
+                if (charSequence.length() > 200) {
+                    write_input.setText(charSequence.subSequence(0, 200)); // Trim extra characters
+                    write_input.setSelection(200); // Set cursor position to the end
+                    Toast.makeText(getContext(), "Limit reached! Max 200 characters.", Toast.LENGTH_SHORT).show();
                 }
-                charCount.setText(charSequence.length() + "/500");
+                charCount.setText(charSequence.length() + "/200");
             }
 
             @Override
@@ -99,6 +90,7 @@ public class WriteFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("StaticFieldLeak")
     private void sendNoteToServer(String username, String content, boolean anonymous, int userId) {
         final ProgressDialog progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Submitting note...");
