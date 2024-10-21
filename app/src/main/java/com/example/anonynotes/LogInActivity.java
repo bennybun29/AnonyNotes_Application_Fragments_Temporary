@@ -67,40 +67,13 @@ public class LogInActivity extends AppCompatActivity {
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(true);
-                ds.setColor(getResources().getColor(android.R.color.black));
+                ds.setColor(getResources().getColor(android.R.color.white));
             }
         };
 
         spannableString.setSpan(clickableSpan, 23, text.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         textView.setText(spannableString);
         textView.setMovementMethod(LinkMovementMethod.getInstance());
-
-        // Setup clickable "Forgot Password?" text
-        TextView forgotPasswordTV = findViewById(R.id.tvForgotPassword);
-        String forgotPasswordText = "Forgot Password?";
-        SpannableString spannableForgotPassword = new SpannableString(forgotPasswordText);
-        spannableForgotPassword.setSpan(new UnderlineSpan(), 0, forgotPasswordText.length(), 0);
-
-        ClickableSpan clickableForgotPassword = new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                // Redirect to ForgotPasswordActivity
-                Intent intent = new Intent(LogInActivity.this, forgot_password.class);
-                startActivity(intent);
-                finishAffinity();
-            }
-
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
-                ds.setColor(getResources().getColor(android.R.color.black));
-            }
-        };
-
-        spannableForgotPassword.setSpan(clickableForgotPassword, 0, forgotPasswordText.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        forgotPasswordTV.setText(spannableForgotPassword);
-        forgotPasswordTV.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     private void saveEmail(String email) {
@@ -140,7 +113,8 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void sendLoginData(String emailUsername, String password) {
-        String url = "http://10.0.2.2:8000/api/login";  // Make sure this URL is correct
+        String url = "http://10.0.2.2:8000/api/login";
+        //String url = "http://192.168.100.27:8000/api/login";  // Make sure this URL is correct
 
         RequestBody formBody = new FormBody.Builder()
                 .add("email", emailUsername)  // Change this key to match your backend API

@@ -5,14 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:background="#121212"
     tools:context=".HomeFragment">
 
     <!-- Original ConstraintLayout starts here -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
+        android:background="#121212"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         tools:context=".MainActivity"
         android:fitsSystemWindows="true">
 
@@ -38,10 +39,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/home_logo" />
+            app:srcCompat="@drawable/logo" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:background="@color/white"
+            android:background="#121212"
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"

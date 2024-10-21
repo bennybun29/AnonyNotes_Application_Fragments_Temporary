@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#121212"
     android:fitsSystemWindows="true">
 
     <ImageButton
@@ -26,7 +26,7 @@
         android:layout_marginTop="25dp"
         android:fontFamily="@font/inter_bold"
         android:text="Edit Profile"
-        android:textColor="#000000"
+        android:textColor="#F5F5F5"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/btnBackToEditProfile"
@@ -50,7 +50,7 @@
         android:layout_marginTop="200dp"
         android:fontFamily="@font/inter_tight_semibold"
         android:text="Email"
-        android:textColor="#757575"
+        android:textColor="#A2A2A2"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -60,7 +60,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="40dp"
         android:layout_marginRight="10dp"
         android:clickable="false"
         android:ems="10"
@@ -68,9 +67,10 @@
         android:inputType="textEmailAddress"
         android:text="youremail@.gmail.com"
         android:textColor="#757575"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+        app:layout_constraintTop_toBottomOf="@+id/tvUsername_EditProfile" />
 
     <TextView
         android:id="@+id/tvUsername"
@@ -80,7 +80,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_tight_semibold"
         android:text="Username"
-        android:textColor="#000000"
+        android:textColor="#F5F5F5"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/etEmail" />
@@ -93,7 +93,7 @@
         android:layout_marginTop="10dp"
         android:fontFamily="@font/inter_tight_semibold"
         android:text="Bio"
-        android:textColor="#000000"
+        android:textColor="#F5F5F5"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editUsername" />
@@ -110,7 +110,8 @@
         android:focusable="false"
         android:inputType="text"
         android:text="yourUsername"
-        android:textColor="#000000"
+        android:textColor="#F5F5F5"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/etEmail" />
@@ -127,7 +128,9 @@
         android:focusable="false"
         android:hint="Add your bio."
         android:inputType="text"
-        android:textColor="#000000"
+        android:textColor="#F5F5F5"
+        android:textColorHint="#A2A2A2"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editUsername" />

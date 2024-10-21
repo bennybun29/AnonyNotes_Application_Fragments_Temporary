@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/question_marks"
+    android:background="#121212"
     android:fitsSystemWindows="true"
     tools:context=".WriteFragment"
     >
@@ -14,6 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
+        android:background="@drawable/question_marks"
         android:visibility="visible"
         tools:context=".MainActivity">
 
@@ -106,7 +107,7 @@
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:layout_marginBottom="10dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="#202124"
             android:text="Submit"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"

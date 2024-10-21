@@ -14,42 +14,57 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AnonyNotes"
-        tools:targetApi="31"
-        android:usesCleartextTraffic="true">
-        <activity android:name=".CommentSection"
-            android:exported="false"/>
-        <activity android:name=".MainActivity"
-            android:exported="false"/>
-        <activity android:name=".Change_Password"
-            android:exported="false"/>
-        <activity android:name=".Account_Status"
-            android:exported="false"/>
-        <activity android:name=".EditProfile_Bio"
-            android:exported="false"/>
-        <activity android:name=".EditProfile_Username"
-            android:exported="false"/>
-        <activity android:name=".EditProfile"
-            android:exported="false"/>
+        android:usesCleartextTraffic="true"
+        tools:targetApi="31">
+        <activity
+            android:name=".CommentActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Change_Password"
+            android:exported="false" />
+        <activity
+            android:name=".Account_Status"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfile_Bio"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfile_Username"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfile"
+            android:exported="false" />
         <activity
             android:name=".Confirmation_Code"
-            android:exported="false"/>
-        <activity android:name=".Profile_Page"
-            android:exported="false"/>
-        <activity android:name=".Home_Page"
-            android:exported="false"/>
-        <activity android:name=".Strong_Password_Creation"
-            android:exported="false"/>
-        <activity android:name=".Write_Page"
-            android:exported="false"/>
+            android:exported="false" />
+        <activity
+            android:name=".Profile_Page"
+            android:exported="false" />
+        <activity
+            android:name=".Home_Page"
+            android:exported="false" />
+        <activity
+            android:name=".Strong_Password_Creation"
+            android:exported="false" />
+        <activity
+            android:name=".Write_Page"
+            android:exported="false" />
         <activity
             android:name=".forgot_password"
             android:exported="false" />
-        <activity android:name=".startup_page"
-            android:exported="false"/>
+        <activity
+            android:name=".startup_page"
+            android:exported="false" />
         <activity
             android:name=".SignUpActivity"
             android:exported="false"
-            android:windowSoftInputMode="stateHidden"/>
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">

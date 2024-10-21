@@ -98,7 +98,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         // Add click listener for the comment button
         viewHolder.commentButton.setOnClickListener(v -> {
             // Start a new activity or handle comment action here
-            Intent intent = new Intent(v.getContext(), CommentSection.class);
+            Intent intent = new Intent(v.getContext(), CommentActivity.class);
             intent.putExtra("note_id", note.getId()); // Assuming `note` has an ID field
             v.getContext().startActivity(intent);
         });

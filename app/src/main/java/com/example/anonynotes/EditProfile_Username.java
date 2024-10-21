@@ -88,6 +88,7 @@ public class EditProfile_Username extends AppCompatActivity {
         if (token != null) {
             // Prepare the request URL and headers
             String url = "http://10.0.2.2:8000/api/user/"+ user_id;
+            //String url = "http://192.168.100.27:8000/api/user/"+ user_id;
             JSONObject jsonBody = new JSONObject();
             try {
                 jsonBody.put("user_name", newUsername);

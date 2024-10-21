@@ -2,6 +2,8 @@ package com.example.anonynotes;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.WindowManager;
+
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
+
 
         binding.bottomNavMenuNavigation.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();

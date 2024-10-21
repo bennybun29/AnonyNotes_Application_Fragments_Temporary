@@ -6,7 +6,7 @@
     xmlns:material="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="#121212"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,7 +17,7 @@
     <!-- Logo -->
         <ImageView
             android:id="@+id/logo"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:src="@drawable/logo"
@@ -30,13 +30,13 @@
             android:id="@+id/SignUpTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_tight_semibold"
             android:text="Sign Up"
-            android:textColor="@color/black"
+            android:textColor="#F5F5F5"
             android:textSize="40sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/logo" />
 
@@ -46,13 +46,13 @@
             android:id="@+id/SignUpDescTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/inter_tight_semibold"
             android:text="Register with your email address."
-            android:textColor="@color/black"
+            android:textColor="#F5F5F5"
             android:textSize="20sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/SignUpTV" />
 
@@ -73,7 +73,7 @@
                 android:layout_marginLeft="18dp"
                 android:fontFamily="@font/inter_tight_semibold"
                 android:text="Email Address"
-                android:textColor="@color/black"
+                android:textColor="#F5F5F5"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -85,15 +85,16 @@
                 android:layout_marginBottom="15dp"
                 android:layout_marginTop="-10dp"
                 app:boxBackgroundMode="none"
-                app:boxStrokeColor="@color/black">
+                app:boxStrokeColor="@color/white">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ETEmailAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="254"
                     android:background="@drawable/border_edittext"
-                    android:inputType="textEmailAddress" />
+                    android:inputType="textEmailAddress"
+                    android:maxLength="254"
+                    android:textColor="#F5F5F5" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -103,7 +104,7 @@
                 android:layout_marginLeft="18dp"
                 android:fontFamily="@font/inter_tight_semibold"
                 android:text="Username"
-                android:textColor="@color/black"
+                android:textColor="#F5F5F5"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -123,7 +124,8 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_edittext"
                     android:inputType="textPersonName"
-                    android:maxLength="20" />
+                    android:maxLength="20"
+                    android:textColor="#F5F5F5" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -133,7 +135,7 @@
                 android:layout_marginLeft="18dp"
                 android:fontFamily="@font/inter_tight_semibold"
                 android:text="Password"
-                android:textColor="@color/black"
+                android:textColor="#F5F5F5"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -146,17 +148,17 @@
                 app:boxBackgroundMode="none"
                 app:boxStrokeColor="@color/black"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/black"
+                app:passwordToggleTint="#F5F5F5"
                 android:layout_marginTop="-10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ETPassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:maxLength="64"
                     android:background="@drawable/border_edittext"
                     android:inputType="textPassword"
-                    android:textColor="@color/black" />
+                    android:maxLength="64"
+                    android:textColor="#F5F5F5" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -166,7 +168,7 @@
                 android:layout_marginLeft="18dp"
                 android:fontFamily="@font/inter_tight_semibold"
                 android:text="Confirm Password"
-                android:textColor="@color/black"
+                android:textColor="#F5F5F5"
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -179,17 +181,17 @@
                 app:boxBackgroundMode="none"
                 app:boxStrokeColor="@color/black"
                 app:passwordToggleEnabled="true"
-                app:passwordToggleTint="@color/black"
+                app:passwordToggleTint="#F5F5F5"
                 android:layout_marginTop="-10dp">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ETConfirmPassword"
                     android:layout_width="match_parent"
-                    android:maxLength="64"
                     android:layout_height="wrap_content"
                     android:background="@drawable/border_edittext"
                     android:inputType="textPassword"
-                    android:textColor="@color/black" />
+                    android:maxLength="64"
+                    android:textColor="#F5F5F5" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -202,7 +204,7 @@
                 android:text="CREATE ACCOUNT"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                app:backgroundTint="@color/black"
+                app:backgroundTint="#202124"
                 app:cornerRadius="10dp" />
 
         </LinearLayout>

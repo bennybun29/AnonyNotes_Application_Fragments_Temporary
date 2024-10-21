@@ -174,7 +174,8 @@ public class ProfileFragment extends Fragment {
     }
 
     private void fetchUserBio(String userId) {
-        String url = "http://10.0.2.2:8000/api/user/" + userId + "/bio"; // Adjust the endpoint as per your API
+        String url = "http://10.0.2.2:8000/api/user/" + userId + "/bio";
+        //String url = "http://192.168.100.27:8000/api/user/" + userId + "/bio"; // Adjust the endpoint as per your API
 
         // Initialize request queue
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
@@ -209,7 +210,8 @@ public class ProfileFragment extends Fragment {
 
 
     private void fetchUserNotes(String userId) {
-        String url = "http://10.0.2.2:8000/api/users/" + userId + "/notes"; // Construct the URL
+        String url = "http://10.0.2.2:8000/api/users/" + userId + "/notes";
+        //String url = "http://192.168.100.27:8000/api/users/" + userId + "/notes"; // Construct the URL
 
         // Initialize request queue
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
@@ -225,8 +227,7 @@ public class ProfileFragment extends Fragment {
                             String noteContent = noteObject.getString("content");
                             String noteDateCreated = noteObject.getString("created_at");
                             String noteUsername = noteObject.getString("user_name");
-
-                            Note note = new Note(noteUsername, noteDateCreated, noteContent);
+                            Note note = new Note(noteUsername, noteDateCreated, noteContent, noteId);
                             note.setId(noteId);
                             notesList.add(0, note);
                         } catch (JSONException e) {

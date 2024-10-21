@@ -7,97 +7,46 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentViewHolder> {
-    private ArrayList<Comment> commentArraylist;
+public class CommentAdapter extends RecyclerView.Adapter <CommentAdapter.ViewHolder> {
+    private ArrayList<Comment> commentList;
     private Context context;
 
-    public CommentAdapter(ArrayList<Comment> commentArraylist, Context context) {
-        this.commentArraylist = commentArraylist;
+    public CommentAdapter(ArrayList<Comment> commentList, Context context) {
+        this.commentList = commentList;
         this.context = context;
     }
 
     @NonNull
     @Override
-    public CommentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_view_comment, parent, false);
-        return new CommentViewHolder(view);
+    public CommentAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_view_reply, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull CommentViewHolder holder, int position) {
-        Comment comment = commentArraylist.get(position);
-        holder.tvMainUsername.setText(comment.getName());
-        holder.tvdateCreated.setText(comment.getDateCreated());
-        holder.tvMainNote.setText(comment.getContent());
-
-        // Set up the replies RecyclerView
-        holder.repliesRecyclerView.setLayoutManager(new LinearLayoutManager(context));
-        ReplyAdapter replyAdapter = new ReplyAdapter(comment.getReplies(), context);
-        holder.repliesRecyclerView.setAdapter(replyAdapter);
+    public void onBindViewHolder(@NonNull CommentAdapter.ViewHolder holder, int position) {
+        Comment comment = commentList.get(position);
+        holder.tvReplyUsername.setText(comment.getUsername());
+        holder.tvreplydateCreated.setText(comment.getDateCreated());
+        holder.tvReply.setText(comment.getContent());
     }
-
 
     @Override
     public int getItemCount() {
-        return commentArraylist.size();
+        return commentList.size();
     }
 
-    public class CommentViewHolder extends RecyclerView.ViewHolder {
-        TextView tvMainUsername, tvdateCreated, tvMainNote;
-        RecyclerView repliesRecyclerView;
-        public CommentViewHolder(@NonNull View itemView) {
+    public class ViewHolder extends RecyclerView.ViewHolder {
+        TextView tvReplyUsername, tvreplydateCreated, tvReply;
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            tvMainUsername = itemView.findViewById(R.id.tvMainUsername);
-            tvdateCreated= itemView.findViewById(R.id.tvdateCreated);
-            tvMainNote = itemView.findViewById(R.id.tvMainNote);
-            repliesRecyclerView = itemView.findViewById(R.id.recycler_view_replies);
-        }
-    }
-
-    public class ReplyAdapter extends RecyclerView.Adapter<ReplyAdapter.ReplyViewHolder> {
-        private List<Comment> replyList;
-        private Context context;
-
-        public ReplyAdapter(List<Comment> replyList, Context context) {
-            this.replyList = replyList;
-            this.context = context;
-        }
-
-        @NonNull
-        @Override
-        public ReplyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_view_reply, parent, false);
-            return new ReplyViewHolder(view);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull ReplyViewHolder holder, int position) {
-            Comment reply = replyList.get(position);
-            holder.tvReplyUsername.setText(reply.getName());
-            holder.tvReplyContent.setText(reply.getContent());
-            holder.replydateCreated.setText(reply.getDateCreated());
-        }
-
-        @Override
-        public int getItemCount() {
-            return replyList.size();
-        }
-
-        public class ReplyViewHolder extends RecyclerView.ViewHolder {
-            TextView tvReplyUsername, tvReplyContent, replydateCreated;
-
-            public ReplyViewHolder(@NonNull View itemView) {
-                super(itemView);
-                tvReplyUsername = itemView.findViewById(R.id.tvReplyUsername); // Make sure this ID exists in reply_item.xml
-                tvReplyContent = itemView.findViewById(R.id.tvReply); // Make sure this ID exists in reply_item.xml
-                replydateCreated = itemView.findViewById(R.id.replydateCreated);
-            }
+            tvReplyUsername = itemView.findViewById(R.id.tvReplyUsername);
+            tvreplydateCreated = itemView.findViewById(R.id.replydateCreated);
+            tvReply = itemView.findViewById(R.id.tvReply);
         }
     }
 }

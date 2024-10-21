@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProfileFragment"
-    android:id="@+id/fragment_container">
+    android:id="@+id/fragment_container"
+    android:background="#121212">
 
     <!-- TODO: Update blank fragment layout -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
         tools:context=".MainActivity"
         android:fitsSystemWindows="true">
 
@@ -27,7 +27,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/home_logo" />
+            app:srcCompat="@drawable/logo" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="19dp"
             android:layout_marginEnd="10dp"
-            android:backgroundTint="@color/black"
+            android:backgroundTint="#202124"
             android:text="Edit Profile"
             android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
             android:layout_marginTop="18dp"
             android:fontFamily="@font/inter_bold"
             android:hint="username"
-            android:textColor="#000000"
+            android:textColor="#F5F5F5"
             android:textSize="34sp"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toBottomOf="@+id/Home_img" />
@@ -105,8 +105,10 @@
             android:layout_marginEnd="10dp"
             android:fontFamily="@font/inter_light"
             android:hint="Edit your bio using Edit Profile button."
-            android:textColor="#000000"
+            android:textColor="#F5F5F5"
+            android:textColorHint="#BABABA"
             android:textSize="16sp"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/profile"
             app:layout_constraintTop_toBottomOf="@+id/tvUsernameProfile" />
@@ -146,7 +148,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/account_status"
                 android:text="Account Status"
-                android:textColor="#FF000000"
+                android:textColor="#F5F5F5"
                 android:textSize="15dp"
                 android:drawablePadding="10dp"
                 android:paddingTop="10dp"
@@ -160,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/password_reset"
                 android:text="Change Password"
-                android:textColor="#FF000000"
+                android:textColor="#F5F5F5"
                 android:textSize="15dp"
                 android:drawablePadding="10dp"
                 android:padding="10dp"
@@ -173,7 +175,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/signoutbutton"
                 android:text="Logout"
-                android:textColor="#FF000000"
+                android:textColor="#F5F5F5"
                 android:textSize="15dp"
                 android:drawablePadding="10dp"
                 android:padding="10dp"

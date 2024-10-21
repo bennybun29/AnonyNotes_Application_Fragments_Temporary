@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    android:background="#121212"
     android:fitsSystemWindows="true">
 
     <FrameLayout
@@ -23,7 +24,7 @@
         android:id="@+id/bottomNavMenuNavigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:backgroundTint="#FFFFFF"
+        app:backgroundTint="#202124"
         android:elevation="5dp"
         app:itemIconSize="24dp"
         app:labelVisibilityMode="labeled"
@@ -33,6 +34,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:menu="@menu/bottom_nav_menu"
+        app:itemTextColor="#F5F5F5"
+        android:background="@drawable/navigation_corner"
         app:itemIconTint="@color/nav_icon_color"
         app:itemActiveIndicatorStyle="@color/black"/>
 

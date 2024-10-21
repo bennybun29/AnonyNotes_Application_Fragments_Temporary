@@ -87,7 +87,8 @@ public class HomeFragment extends Fragment {
                             String userName = jsonObject.getString("user_name");
                             String content = jsonObject.getString("content");
                             String createdAt = jsonObject.getString("created_at");
-                            notes.add(0, new Note(userName, createdAt, content));
+                            String noteID = jsonObject.getString("note_id");
+                            notes.add(0, new Note(userName, createdAt, content, noteID));
                         }
 
                         // Notify adapter of the updated data
@@ -114,8 +115,8 @@ public class HomeFragment extends Fragment {
                 String exampleUserName = "Sample User";
                 String exampleContent = "This is an example note content.";
                 String exampleCreatedAt = "2024-10-05"; // You can format this as needed
-
-                notes.add(new Note(exampleUserName, exampleCreatedAt, exampleContent));
+                String exampleNoteId = "1";
+                notes.add(new Note(exampleNoteId, exampleUserName, exampleCreatedAt, exampleContent));
                 adapter.notifyDataSetChanged();
             }
 

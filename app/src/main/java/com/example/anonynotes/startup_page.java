@@ -26,7 +26,7 @@ public class startup_page extends AppCompatActivity {
         String username = preferences.getString("username", ""); // Default to empty string if not found
 
         if (username != null) {
-            tvWUsername.setText(username); // Set the username in the TextView
+            tvWUsername.setText(username + "!"); // Set the username in the TextView
         }
 
         btnGetStarted.setOnClickListener(v -> {

@@ -56,7 +56,8 @@ public class Change_Password extends AppCompatActivity {
         Gson gson = new GsonBuilder().setLenient().create();
 
         retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:8000/api/")  // Replace with your base URL
+                .baseUrl("http://10.0.2.2:8000/api/")
+                //.baseUrl("http://192.168.100.27:8000/api/")// Replace with your base URL
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .build();
 

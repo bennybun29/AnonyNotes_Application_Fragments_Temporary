@@ -8,13 +8,11 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
-import android.view.View;
-import android.widget.TextView;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashActivity extends AppCompatActivity {
 
-    private TextView notificationBubble;
     private Handler handler = new Handler();
     private Runnable runnable;
     private final long SPLASH_DISPLAY_LENGTH = 3000; // 3 seconds
@@ -23,8 +21,6 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);  // Removed EdgeToEdge.enable(this) for now
-
-        notificationBubble = findViewById(R.id.notification_bubble);
 
         // Check if the auth token is already saved in SharedPreferences
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this); // Updated
@@ -50,12 +46,11 @@ public class SplashActivity extends AppCompatActivity {
         if (isConnected()) {
             startSign_Up();
         } else {
-            showNotificationBubble("Not connected to the internet");
+            showToast("Not connected to the internet");
             runnable = new Runnable() {
                 @Override
                 public void run() {
                     if (isConnected()) {
-                        hideNotificationBubble();
                         startSign_Up();
                     } else {
                         handler.postDelayed(runnable, 3000);
@@ -72,19 +67,15 @@ public class SplashActivity extends AppCompatActivity {
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
 
-    private void showNotificationBubble(String message) {
-        notificationBubble.setText(message);
-        notificationBubble.setVisibility(View.VISIBLE);
-    }
-
-    private void hideNotificationBubble() {
-        notificationBubble.setVisibility(View.GONE);
+    private void showToast(String message) {
+        Toast.makeText(SplashActivity.this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void startSign_Up() {
         Intent intent = new Intent(SplashActivity.this, SignUpActivity.class);
         startActivity(intent);
-        finish();
+        overridePendingTransition(R.anim.scale_up, R.anim.fade_in);
+        finishAffinity();
     }
 
     @Override

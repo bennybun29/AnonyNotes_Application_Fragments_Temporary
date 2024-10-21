@@ -4,11 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#FFFFFF"
+    android:background="#121212"
     android:padding="10dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView"
+        android:background="#121212"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,6 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#121212"
             android:padding="5dp">
 
             <ImageView
@@ -25,10 +27,9 @@
                 android:layout_width="66dp"
                 android:layout_height="66dp"
                 android:layout_marginStart="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="10dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.1"
                 app:srcCompat="@drawable/profile" />
 
             <TextView
@@ -39,7 +40,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/inter_bold"
                 android:hint="Username"
-                android:textColor="#000000"
+                android:textColor="#F5F5F5"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
@@ -66,6 +67,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="@font/inter_light"
                 android:hint="User's note goes here..."
+                android:textColor="#F5F5F5"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
@@ -99,6 +101,7 @@
                 android:layout_marginStart="3dp"
                 android:layout_marginTop="17dp"
                 android:text="0"
+                android:textColor="#F5F5F5"
                 app:layout_constraintStart_toEndOf="@+id/heartButton"
                 app:layout_constraintTop_toBottomOf="@+id/seeMoreLess" />
 
@@ -120,6 +123,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginTop="17dp"
                 android:text="0"
+                android:textColor="#F5F5F5"
                 app:layout_constraintStart_toEndOf="@+id/commentButton"
                 app:layout_constraintTop_toBottomOf="@+id/seeMoreLess" />
 
@@ -128,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="34dp"
+                android:layout_marginTop="33dp"
                 android:fontFamily="sans-serif"
                 android:hint="Time"
                 android:textColor="#6D6D6D"
@@ -142,7 +146,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="0.5dp"
         android:layout_marginTop="8dp"
         android:background="@color/white"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />

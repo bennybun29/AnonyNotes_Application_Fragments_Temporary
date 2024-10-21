@@ -90,7 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
             public void updateDrawState(TextPaint ds) {
                 super.updateDrawState(ds);
                 ds.setUnderlineText(true); // Add underline to the "Sign In"
-                ds.setColor(getResources().getColor(android.R.color.black)); // Set color of "Sign In"
+                ds.setColor(getResources().getColor(android.R.color.white)); // Set color of "Sign In"
             }
         };
 
@@ -112,7 +112,8 @@ public class SignUpActivity extends AppCompatActivity {
     // Method to send signup data to the server
     private void sendSignUpData(String email, String username, String password) {
         // Your API URL
-        String url = "http://10.0.2.2:8000/api/register";  // Use 10.0.2.2 for localhost with XAMPP on an Android emulator
+        String url = "http://10.0.2.2:8000/api/register";
+        //String url = "http://192.168.100.27:8000/api/register";  // Use 10.0.2.2 for localhost with XAMPP on an Android emulator
 
         // Create a JSON object with the required fields
         JSONObject json = new JSONObject();

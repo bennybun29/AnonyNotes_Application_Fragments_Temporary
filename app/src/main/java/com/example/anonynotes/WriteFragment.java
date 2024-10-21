@@ -1,6 +1,5 @@
 package com.example.anonynotes;
 
-
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.SharedPreferences;
@@ -12,13 +11,18 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
+
 import org.json.JSONObject;
+
 import java.io.IOException;
+
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -33,6 +37,15 @@ public class WriteFragment extends Fragment {
 
     public WriteFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Set the soft input mode for this fragment
+        if (getActivity() != null) {
+            getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        }
     }
 
     @Override
@@ -51,7 +64,7 @@ public class WriteFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                // Limit to 500 characters
+                // Limit to 200 characters
                 if (charSequence.length() > 200) {
                     write_input.setText(charSequence.subSequence(0, 200)); // Trim extra characters
                     write_input.setSelection(200); // Set cursor position to the end
@@ -63,7 +76,6 @@ public class WriteFragment extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {}
         });
-
 
         submit.setOnClickListener(v -> {
             String content = write_input.getText().toString();
@@ -119,6 +131,7 @@ public class WriteFragment extends Fragment {
                 RequestBody body = RequestBody.create(json.toString(), JSON);
                 Request request = new Request.Builder()
                         .url("http://10.0.2.2:8000/api/notes")
+                        //.url("http://192.168.100.27:8000/api/notes")
                         .post(body)
                         .addHeader("Authorization", "Bearer " + token)
                         .build();

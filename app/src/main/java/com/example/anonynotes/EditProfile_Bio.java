@@ -112,6 +112,7 @@ public class EditProfile_Bio extends AppCompatActivity {
 
     private void updateUserBioOnServer(String newBio) {
         String url = "http://10.0.2.2:8000/api/user/" + user_id;
+        //String url = "http://192.168.100.27:8000/api/user/" + user_id;
         JSONObject jsonBody = new JSONObject();
         try {
             jsonBody.put("bio", newBio);
