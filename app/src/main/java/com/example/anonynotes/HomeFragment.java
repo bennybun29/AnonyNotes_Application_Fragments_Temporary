@@ -77,6 +77,7 @@ public class HomeFragment extends Fragment {
             @Override
             protected void onPostExecute(String result) {
                 Log.d("HomeFragment", "Received result: " + result); // Log the raw response
+
                 if (result != null && !result.isEmpty()) {
                     try {
                         // Attempt to parse the JSON response
@@ -87,28 +88,28 @@ public class HomeFragment extends Fragment {
                             String userName = jsonObject.getString("user_name");
                             String content = jsonObject.getString("content");
                             String createdAt = jsonObject.getString("created_at");
-                            String noteID = jsonObject.getString("note_id");
+
+                            // Check if note_id exists before accessing it
+                            String noteID = jsonObject.has("note_id") ? jsonObject.getString("note_id") : "Unknown";
+
+                            // Add the parsed note to the list
                             notes.add(0, new Note(userName, createdAt, content, noteID));
                         }
 
                         // Notify adapter of the updated data
                         adapter.notifyDataSetChanged();
                     } catch (Exception e) {
-                        e.printStackTrace();
-                        Log.e("HomeFragment", "Error parsing JSON: " + e.getMessage());
+                        Log.e("HomeFragment", "Error parsing JSON: " + e.getMessage(), e);
+                        Log.e("HomeFragment", "Raw JSON response: " + result);
                         Toast.makeText(getContext(), "Failed to parse notes", Toast.LENGTH_SHORT).show();
-
-                        // Add an example note in case of a parsing error
-                        addExampleNote();
+                        addExampleNote(); // Optional fallback
                     }
                 } else {
-                    // Handle case when result is null or empty
                     Toast.makeText(getContext(), "No notes available", Toast.LENGTH_SHORT).show();
-
-                    // Add an example note when no notes are available
-                    addExampleNote();
+                    addExampleNote(); // Optional fallback
                 }
             }
+
 
             // Method to add an example note
             private void addExampleNote() {
@@ -116,7 +117,7 @@ public class HomeFragment extends Fragment {
                 String exampleContent = "This is an example note content.";
                 String exampleCreatedAt = "2024-10-05"; // You can format this as needed
                 String exampleNoteId = "1";
-                notes.add(new Note(exampleNoteId, exampleUserName, exampleCreatedAt, exampleContent));
+                notes.add(new Note(exampleUserName, exampleCreatedAt, exampleContent, exampleNoteId));
                 adapter.notifyDataSetChanged();
             }
 
