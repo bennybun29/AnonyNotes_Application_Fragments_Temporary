@@ -24,7 +24,7 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".Change_Password"
             android:exported="false" />
@@ -44,16 +44,7 @@
             android:name=".Confirmation_Code"
             android:exported="false" />
         <activity
-            android:name=".Profile_Page"
-            android:exported="false" />
-        <activity
-            android:name=".Home_Page"
-            android:exported="false" />
-        <activity
             android:name=".Strong_Password_Creation"
-            android:exported="false" />
-        <activity
-            android:name=".Write_Page"
             android:exported="false" />
         <activity
             android:name=".forgot_password"

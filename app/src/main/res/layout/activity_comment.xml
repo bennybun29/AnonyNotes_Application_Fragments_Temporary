@@ -22,7 +22,7 @@
         app:srcCompat="@drawable/baseline_arrow_back_24" />
 
     <TextView
-        android:id="@+id/tvWelcome"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="46dp"
         android:layout_marginTop="48dp"
@@ -58,7 +58,7 @@
         android:padding="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcome">
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle">
 
         <ImageView
             android:id="@+id/imageViewProfile"
@@ -85,7 +85,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/dateCreated"
+            android:id="@+id/tvdateCreated"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
@@ -109,7 +109,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageViewProfile"
-            app:layout_constraintTop_toBottomOf="@+id/dateCreated" />
+            app:layout_constraintTop_toBottomOf="@+id/tvdateCreated" />
 
         <!-- See More/Less TextView -->
         <TextView
@@ -144,7 +144,7 @@
             app:layout_constraintTop_toBottomOf="@+id/seeMoreLess" />
 
         <TextView
-            android:id="@+id/tvTime"
+            android:id="@+id/tvNoteTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -153,8 +153,18 @@
             android:hint="Time"
             android:textColor="#6D6D6D"
             android:textSize="14sp"
-            app:layout_constraintStart_toEndOf="@+id/dateCreated"
+            app:layout_constraintStart_toEndOf="@+id/tvdateCreated"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/spinnerSort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/rounded_spinner_background"
+            android:entries="@array/sort_options"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -170,28 +180,50 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
         app:layout_constraintVertical_bias="0.511" />
 
-    <EditText
-        android:id="@+id/editTextText"
-        android:layout_width="292dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="28dp"
-        android:ems="10"
-        android:textColor="#f5f5f5"
-        android:inputType="text"
-        android:text="Name"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageButton
-        android:id="@+id/btnSend"
-        android:layout_width="75dp"
-        android:layout_height="49dp"
-        android:layout_marginBottom="28dp"
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/border_ng_reply"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextText"
-        app:srcCompat="@drawable/ic" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/etReply"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="7dp"
+            android:layout_marginBottom="28dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:textColor="#000000"
+            android:minLines="1"
+            android:maxLines="3"
+            android:scrollHorizontally="false"
+            android:scrollbars="vertical"
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/tvcharCount"
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="0/200"
+            />
+        <ImageButton
+            android:id="@+id/btnSend"
+            android:layout_width="75dp"
+            android:layout_height="49dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginBottom="28dp"
+            android:background="@null"
+            app:srcCompat="@drawable/ic" />
+    </LinearLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -117,17 +117,6 @@
                 app:srcCompat="@drawable/baseline_comment_24" />
 
             <TextView
-                android:id="@+id/tvCommentCounter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="17dp"
-                android:text="0"
-                android:textColor="#F5F5F5"
-                app:layout_constraintStart_toEndOf="@+id/commentButton"
-                app:layout_constraintTop_toBottomOf="@+id/seeMoreLess" />
-
-            <TextView
                 android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

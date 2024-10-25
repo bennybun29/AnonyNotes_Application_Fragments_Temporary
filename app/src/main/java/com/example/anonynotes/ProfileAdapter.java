@@ -11,11 +11,16 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Scanner;
 import java.util.TimeZone;
 
 public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
@@ -44,6 +49,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.tvUsername.setText(note.getUsername());
         viewHolder.dateCreated.setText(note.getDateCreated());
 
+        fetchHeartCount(note.getNoteId(), viewHolder.tvHeartCounter);
+
         String content = note.getContent();
         viewHolder.tvNote.setText(content);
 
@@ -63,6 +70,7 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             note.setExpanded(!note.isExpanded()); // Toggle the expanded state of the note
             notifyItemChanged(i); // Notify the adapter to refresh this item
         });
+
 
         // Format the created_at timestamp to show the date and time
         String fullDateTime = note.getDateCreated(); // Full timestamp from the note
@@ -99,15 +107,53 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.commentButton.setOnClickListener(v -> {
             // Start a new activity or handle comment action here
             Intent intent = new Intent(v.getContext(), CommentActivity.class);
-            intent.putExtra("note_id", note.getId()); // Assuming `note` has an ID field
+            intent.putExtra("note_id", note.getNoteId()); // Assuming `note` has an ID field
+            intent.putExtra("userName", note.getUsername()); // Pass additional data if needed
+            intent.putExtra("dateCreated", note.getDateCreated()); // Pass additional data if needed
+            intent.putExtra("content", note.getContent()); // Pass additional data if needed
             v.getContext().startActivity(intent);
         });
+
     }
+
 
 
     @Override
     public int getItemCount() {
         return notes.size();
+    }
+
+    private void fetchHeartCount(String noteId, TextView tvHeartCounter) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2:8000/api/notes/" + noteId + "/hearts/count");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                // Check if the request was successful
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Parse the response
+                    Scanner scanner = new Scanner(conn.getInputStream());
+                    StringBuilder response = new StringBuilder();
+                    while (scanner.hasNext()) {
+                        response.append(scanner.nextLine());
+                    }
+                    scanner.close();
+
+                    // Assuming the response contains the count as a JSON object, like: {"count": 10}
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    int heartCount = jsonResponse.getInt("heart_count");
+
+                    // Update the heart counter on the UI thread
+                    tvHeartCounter.post(() -> tvHeartCounter.setText(String.valueOf(heartCount)));
+                }
+
+                conn.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
     }
 
     // This method can be called to update the data from the server
@@ -118,8 +164,8 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     // ViewHolder class to hold the view references
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUsername, dateCreated, tvNote, seeMoreLess, tvTime; // Add tvTime here
-        private ImageButton commentButton;
+        TextView tvUsername, dateCreated, tvNote, seeMoreLess, tvTime, tvHeartCounter; // Add tvTime here
+        private ImageButton commentButton, btnBack;
         boolean isExpanded = false; // Track whether the note is expanded
 
         public ViewHolder(@NonNull View itemView) {
@@ -130,6 +176,9 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             seeMoreLess = itemView.findViewById(R.id.seeMoreLess); // Reference to the "see more/less" TextView
             tvTime = itemView.findViewById(R.id.tvTime); // Initialize tvTime
             commentButton = itemView.findViewById(R.id.commentButton);
+            btnBack = itemView.findViewById(R.id.btnBack);
+            tvHeartCounter = itemView.findViewById(R.id.tvHeartCounter);
+
         }
     }
 }

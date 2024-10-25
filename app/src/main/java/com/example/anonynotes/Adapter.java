@@ -5,23 +5,32 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import org.json.JSONObject;
+
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import java.util.List;
+import java.util.Scanner;
 import java.util.TimeZone;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
 
     private LayoutInflater layoutInflater;
     private List<Note> notes;
+    public int currentHeartCount;
 
     // Constructor
     Adapter(Context context, List<Note> notes) {
@@ -42,9 +51,15 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         Note note = notes.get(i);
         viewHolder.tvUsername.setText(note.getUsername());
         viewHolder.dateCreated.setText(note.getDateCreated());
-
+        currentHeartCount = note.getHeartCount();
         String content = note.getContent();
         viewHolder.tvNote.setText(content);
+        fetchHeartCount(note.getNoteId(), viewHolder.tvHeartCounter);
+        // Retrieve liked state from SharedPreferences
+        boolean isLiked = isNoteLiked(viewHolder.itemView.getContext(), note.getNoteId());
+        viewHolder.heartButton.setImageResource(isLiked ? R.drawable.heart_filled: R.drawable.heartbutton);
+        note.setLiked(isLiked);
+
 
         // Check the length of the note content
         if (content.length() > 100) {
@@ -99,9 +114,131 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             // Start a new activity or handle comment action here
             Intent intent = new Intent(v.getContext(), CommentActivity.class);
             intent.putExtra("note_id", note.getNoteId()); // Assuming `note` has an ID field
+            intent.putExtra("userName", note.getUsername()); // Pass additional data if needed
+            intent.putExtra("dateCreated", note.getDateCreated()); // Pass additional data if needed
+            intent.putExtra("content", note.getContent()); // Pass additional data if needed
             v.getContext().startActivity(intent);
         });
+
+
+        viewHolder.heartButton.setOnClickListener(v -> {
+            boolean currentLikedState = note.isLiked();
+            if (currentLikedState) {
+                // User is unliking the note
+                int currentHeartCount = Integer.parseInt(viewHolder.tvHeartCounter.getText().toString());
+                currentHeartCount--;
+                currentHeartCount++;
+                viewHolder.tvHeartCounter.setText(String.valueOf(currentHeartCount));
+                viewHolder.heartButton.setImageResource(R.drawable.heartbutton);
+
+                // Remove heart in the backend
+                removeHeart(note.getNoteId(), note.getUsername(), viewHolder.tvHeartCounter);
+            } else {
+                // User is liking the note
+                int currentHeartCount = Integer.parseInt(viewHolder.tvHeartCounter.getText().toString());
+                currentHeartCount++;
+                viewHolder.tvHeartCounter.setText(String.valueOf(currentHeartCount));
+                viewHolder.heartButton.setImageResource(R.drawable.heart_filled);
+
+                // Add heart in the backend
+                addHeart(note.getNoteId(), note.getUsername(), viewHolder.tvHeartCounter);
+            }
+
+            // Save the new liked state to SharedPreferences
+            setNoteLiked(v.getContext(), note.getNoteId(), !currentLikedState);
+            note.setLiked(!currentLikedState);  // Toggle the liked state
+        });
+
     }
+
+    private void addHeart(String noteId, String userName, TextView heartCounter) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2:8000/api/notes/" + noteId + "/hearts");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                // Create the request body
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("user_name", userName);
+
+                // Send the request
+                OutputStreamWriter out = new OutputStreamWriter(conn.getOutputStream());
+                out.write(jsonParam.toString());
+                out.flush();
+                out.close();
+
+                // Check if the request was successful
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    fetchHeartCount(noteId, heartCounter);
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+
+
+    private void removeHeart(String noteId, String userName, TextView heartCounter) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2:8000/api/notes/" + noteId + "/hearts/" + userName);
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("DELETE");
+
+                // Check if the request was successful
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Update the heart count on the UI thread
+                    heartCounter.post(() -> {
+                        int currentHeartCount = Integer.parseInt(heartCounter.getText().toString());
+                        heartCounter.setText(String.valueOf(currentHeartCount - 1));
+                    });
+                }
+                conn.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
+    private void fetchHeartCount(String noteId, TextView tvHeartCounter) {
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://10.0.2.2:8000/api/notes/" + noteId + "/hearts/count");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("GET");
+
+                // Check if the request was successful
+                int responseCode = conn.getResponseCode();
+                if (responseCode == HttpURLConnection.HTTP_OK) {
+                    // Parse the response
+                    Scanner scanner = new Scanner(conn.getInputStream());
+                    StringBuilder response = new StringBuilder();
+                    while (scanner.hasNext()) {
+                        response.append(scanner.nextLine());
+                    }
+                    scanner.close();
+
+                    // Assuming the response contains the count as a JSON object, like: {"count": 10}
+                    JSONObject jsonResponse = new JSONObject(response.toString());
+                    int heartCount = jsonResponse.getInt("heart_count");
+
+                    tvHeartCounter.post(() -> tvHeartCounter.setText(String.valueOf(heartCount)));
+                }
+
+                conn.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
+
 
 
     @Override
@@ -114,11 +251,26 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         this.notes = newNotes;
         notifyDataSetChanged(); // Notify the adapter that the data has changed
     }
+    // Method to check if a note is liked
+    private boolean isNoteLiked(Context context, String noteId) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("liked_notes", Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean(noteId, false);
+    }
+
+    // Method to save the liked state
+    private void setNoteLiked(Context context, String noteId, boolean isLiked) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("liked_notes", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(noteId, isLiked);
+        editor.apply();
+    }
+
+
 
     // ViewHolder class to hold the view references
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvUsername, dateCreated, tvNote, seeMoreLess, tvTime; // Add tvTime here
-        public ImageButton commentButton;
+        TextView tvUsername, dateCreated, tvNote, seeMoreLess, tvTime, tvHeartCounter; // Add tvTime here
+        public ImageButton commentButton, heartButton;
         boolean isExpanded = false; // Track whether the note is expanded
 
         public ViewHolder(@NonNull View itemView) {
@@ -129,6 +281,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             seeMoreLess = itemView.findViewById(R.id.seeMoreLess); // Reference to the "see more/less" TextView
             tvTime = itemView.findViewById(R.id.tvTime); // Initialize tvTime
             commentButton = itemView.findViewById(R.id.commentButton);
+            heartButton = itemView.findViewById(R.id.heartButton);
+            tvHeartCounter = itemView.findViewById(R.id.tvHeartCounter);
         }
     }
 }

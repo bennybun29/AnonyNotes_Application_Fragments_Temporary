@@ -2,7 +2,8 @@ package com.example.anonynotes;
 
 public class Note {
     private String username, dateCreated, content, id, tvTime, noteId, comment_id;
-    private boolean isExpanded;
+    private boolean isExpanded, isLiked;
+    private int commentCount, heartCount;
 
     public Note(String username, String dateCreated, String content, String noteId) {
         this.username = username;
@@ -11,6 +12,31 @@ public class Note {
         this.isExpanded = false;
         this.noteId = noteId;
         this.comment_id = comment_id;
+        this.heartCount = heartCount;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public int getHeartCount() {
+        return heartCount;
+    }
+
+    public void setHeartCount(int heartCount) {
+        this.heartCount = heartCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
     public boolean isExpanded() {
