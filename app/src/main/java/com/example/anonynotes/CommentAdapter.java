@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -96,6 +97,8 @@ public class CommentAdapter extends RecyclerView.Adapter <CommentAdapter.ViewHol
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView tvReplyUsername, tvreplydateCreated, tvReply, tvseeMoreLess;
+        public ImageButton heartButton;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvReplyUsername = itemView.findViewById(R.id.tvReplyUsername);

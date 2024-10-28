@@ -7,8 +7,8 @@ public class Comment {
     String id;
     String username;
     String dateCreated;
-    String content;
-    boolean isExpanded;
+    String content, noteId, commentId;
+    boolean isExpanded, isLiked;
 
 
 
@@ -22,12 +22,30 @@ public class Comment {
 
     }
 
+    public void setLiked(boolean liked) {
+        isLiked = liked;
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public String getCommentId() {
+        return commentId;
+    }
+
+
+
     public boolean isExpanded() {return isExpanded;}
 
     public void setExpanded(boolean expanded) {isExpanded = expanded;}
 
     public String getDateCreated() {
         return dateCreated;
+    }
+
+    public String getNoteId() {
+        return noteId;
     }
 
     public String getContent() {

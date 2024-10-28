@@ -79,7 +79,7 @@
         private boolean isExpanded = false;
         private EditText etCommentContent;
         private Spinner spinnerSort;
-
+        private ImageButton heartButton;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,10 @@
             tvTitle.setText(userName + "'s Note Comments");
             tvMainUsername.setText(userName);
             tvNote.setText(content);
+
+            ImageButton heartButton = findViewById(R.id.heartButton);
+            boolean isLiked = getIntent().getBooleanExtra("isLiked", false);
+            heartButton.setImageResource(isLiked ? R.drawable.heart_filled : R.drawable.heartbutton);
 
             // Parse and format the dateCreated using SimpleDateFormat
             SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'", Locale.getDefault());

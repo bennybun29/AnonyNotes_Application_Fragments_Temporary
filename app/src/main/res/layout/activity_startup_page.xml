@@ -1,93 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#121212"
-    tools:context=".startup_page"
-    android:fitsSystemWindows="true"
-    >
+    android:fillViewport="true">
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:fontFamily="@font/oswald_light"
-        android:text="Ever wished you could speak your mind without consequences? &#xA;With Anony-Notes, you can. Share your honest opinions, confessions, and insights anonymously. Let your truths be heard."
-        android:textAlignment="center"
-        android:textColor="#F5F5F5"
-        android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWUsername" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="400dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:layout_marginTop="40dp"
-        android:src="@drawable/quill_with_ink"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
-
-    <TextView
-        android:id="@+id/tvWelcome"
-        android:layout_width="259dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/inter_tight_semibold"
-        android:text="Welcome,"
-        android:textAlignment="center"
-        android:textColor="#F5F5F5"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
-
-    <TextView
-        android:id="@+id/tvWUsername"
-        android:layout_width="259dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:fontFamily="@font/inter_tight_semibold"
-        android:text="Username!"
-        android:textAlignment="center"
-        android:textColor="#F5F5F5"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnGetStarted"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_margin="15dp"
-        android:fontFamily="@font/inter_tight_semibold"
-        android:text="GET STARTED"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        app:backgroundTint="#202124"
-        app:cornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+        android:layout_height="wrap_content"
+        android:background="#121212"
+        tools:context=".startup_page"
+        android:fitsSystemWindows="true">
 
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:fontFamily="@font/oswald_light"
+            android:text="Ever wished you could speak your mind without consequences? &#xA;With Anony-Notes, you can. Share your honest opinions, confessions, and insights anonymously. Let your truths be heard."
+            android:textAlignment="center"
+            android:textColor="#F5F5F5"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvWUsername" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="400dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/logo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="40dp"
+            android:src="@drawable/quill_with_ink"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo" />
+
+        <TextView
+            android:id="@+id/tvWelcome"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/inter_tight_semibold"
+            android:text="Welcome,"
+            android:textAlignment="center"
+            android:textColor="#F5F5F5"
+            android:textSize="25dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+
+        <TextView
+            android:id="@+id/tvWUsername"
+            android:layout_width="259dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:fontFamily="@font/inter_tight_semibold"
+            android:text="Username!"
+            android:textAlignment="center"
+            android:textColor="#F5F5F5"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvWelcome" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnGetStarted"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_margin="15dp"
+            android:fontFamily="@font/inter_tight_semibold"
+            android:text="GET STARTED"
+            android:textColor="#FFFFFF"
+            android:textSize="20sp"
+            app:backgroundTint="#202124"
+            app:cornerRadius="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvDescription" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -5,6 +5,8 @@ import android.content.Intent;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,6 +52,10 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         viewHolder.dateCreated.setText(note.getDateCreated());
 
         fetchHeartCount(note.getNoteId(), viewHolder.tvHeartCounter);
+
+        boolean isLiked = isNoteLiked(viewHolder.itemView.getContext(), note.getNoteId());
+        viewHolder.heartButton.setImageResource(isLiked ? R.drawable.heart_filled : R.drawable.heartbutton);
+        note.setLiked(isLiked);
 
         String content = note.getContent();
         viewHolder.tvNote.setText(content);
@@ -161,6 +167,22 @@ public class ProfileAdapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         this.notes = newNotes;
         notifyDataSetChanged(); // Notify the adapter that the data has changed
     }
+
+    private boolean isNoteLiked(Context context, String noteId) {
+        String username = getLoggedInUsername(context);
+        if (username == null) return false; // Return false if username is not found
+
+        SharedPreferences userLikes = context.getSharedPreferences("liked_notes_" + username, Context.MODE_PRIVATE);
+        return userLikes.getBoolean("note_" + noteId, false);
+    }
+
+
+    private String getLoggedInUsername(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("username", null);
+    }
+
+
 
     // ViewHolder class to hold the view references
     public class ViewHolder extends RecyclerView.ViewHolder {

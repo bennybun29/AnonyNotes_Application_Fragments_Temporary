@@ -1,11 +1,14 @@
 package com.example.anonynotes;
 
+import static androidx.core.content.ContextCompat.startActivity;
+
 import android.content.Context;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,11 +34,13 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
     private LayoutInflater layoutInflater;
     private List<Note> notes;
     public int currentHeartCount;
+    private String username;
 
     // Constructor
     Adapter(Context context, List<Note> notes) {
         this.layoutInflater = LayoutInflater.from(context);
         this.notes = notes;
+        this.username = username;
     }
 
     @NonNull
@@ -55,6 +60,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         String content = note.getContent();
         viewHolder.tvNote.setText(content);
         fetchHeartCount(note.getNoteId(), viewHolder.tvHeartCounter);
+
         // Retrieve liked state from SharedPreferences
         boolean isLiked = isNoteLiked(viewHolder.itemView.getContext(), note.getNoteId());
         viewHolder.heartButton.setImageResource(isLiked ? R.drawable.heart_filled: R.drawable.heartbutton);
@@ -117,6 +123,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             intent.putExtra("userName", note.getUsername()); // Pass additional data if needed
             intent.putExtra("dateCreated", note.getDateCreated()); // Pass additional data if needed
             intent.putExtra("content", note.getContent()); // Pass additional data if needed
+            intent.putExtra("isLiked", note.isLiked());
             v.getContext().startActivity(intent);
         });
 
@@ -252,18 +259,34 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         notifyDataSetChanged(); // Notify the adapter that the data has changed
     }
     // Method to check if a note is liked
+// Method to check if a note is liked by the logged-in user
     private boolean isNoteLiked(Context context, String noteId) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("liked_notes", Context.MODE_PRIVATE);
-        return sharedPreferences.getBoolean(noteId, false);
+        String username = getLoggedInUsername(context);
+        if (username == null) return false; // Return false if username is not found
+
+        SharedPreferences userLikes = context.getSharedPreferences("liked_notes_" + username, Context.MODE_PRIVATE);
+        return userLikes.getBoolean("note_" + noteId, false);
     }
 
-    // Method to save the liked state
+
+
+    // Method to save the liked state for the logged-in user
     private void setNoteLiked(Context context, String noteId, boolean isLiked) {
-        SharedPreferences sharedPreferences = context.getSharedPreferences("liked_notes", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(noteId, isLiked);
+        String username = getLoggedInUsername(context);
+        if (username == null) return; // Return if username is not found
+
+        SharedPreferences userLikes = context.getSharedPreferences("liked_notes_" + username, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = userLikes.edit();
+        editor.putBoolean("note_" + noteId, isLiked);
         editor.apply();
     }
+
+
+    private String getLoggedInUsername(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        return sharedPreferences.getString("username", null);
+    }
+
 
 
 

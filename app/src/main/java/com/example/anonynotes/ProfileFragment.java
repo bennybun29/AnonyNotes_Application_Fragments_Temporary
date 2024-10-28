@@ -129,6 +129,7 @@ public class ProfileFragment extends Fragment {
                         editor.clear();  // Remove the saved token
                         editor.apply();
 
+
                         // User confirmed logout, perform the logout action
                         Intent intent = new Intent(requireActivity(), LogInActivity.class);
                         startActivity(intent);

@@ -23,8 +23,8 @@ public class Note {
         return isLiked;
     }
 
-    public void setLiked(boolean liked) {
-        isLiked = liked;
+    public boolean setLiked(boolean liked) {
+        return isLiked = liked;
     }
 
     public int getHeartCount() {
